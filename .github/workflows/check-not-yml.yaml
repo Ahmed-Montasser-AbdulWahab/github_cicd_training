@@ -22,8 +22,8 @@ jobs:
 
             - name: Check for other than yml|yaml extensions
               run: |
-                echo $(ls -I '*.yaml' -I '*.yml' yamls/)
-                if ls -I '*.yaml' -I '*.yml' yamls/ &> /dev/null; then
+                find . -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print
+                if find . -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print; then
                   echo "::error::Error: Found Non YAML files."
                 else
                   echo "No Non YAML files found."
