@@ -20,10 +20,14 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v7.0.1
 
+            - name: List contents in repo
+              run: ls -R
+
             - name: Check for other than yml|yaml extensions
               run: |
-                find . -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print
-                if find . -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print; then
+                OUTPUT=$(find ./yamls -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print)
+                echo $OUTPUT ${#OUTPUT}
+                if [ -n "$OUTPUT" ]; then
                   echo "::error::Error: Found Non YAML files."
                 else
                   echo "No Non YAML files found."
