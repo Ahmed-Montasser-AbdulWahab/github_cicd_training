@@ -11,6 +11,8 @@ on:
             - master
         paths:
             - "yamls/**"
+    repository_dispatch:
+        types: [check-not-yaml]
 
     
 jobs:
@@ -19,9 +21,6 @@ jobs:
         steps:
             - name: Checkout repository
               uses: actions/checkout@v7.0.1
-
-            - name: List contents in repo
-              run: ls -R
 
             - name: Check for other than yml|yaml extensions
               run: |
