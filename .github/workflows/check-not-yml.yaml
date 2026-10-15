@@ -22,6 +22,7 @@ jobs:
 
             - name: Check for other than yml|yaml extensions
               run: |
+                echo $(ls -I '*.yaml' -I '*.yml' yamls/)
                 if ls -I '*.yaml' -I '*.yml' yamls/ &> /dev/null; then
                   echo "::error::Error: Found Non YAML files."
                 else
