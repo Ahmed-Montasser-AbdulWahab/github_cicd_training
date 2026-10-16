@@ -31,9 +31,12 @@ jobs:
             - name: Checkout repository
               uses: actions/checkout@v7.0.1
 
+            - name: Find Non YAML files
+              run: |
+                echo "OUTPUT=$(find ./yamls -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print)" >> $GITHUB_ENV
+
             - name: Check for other than yml|yaml extensions
               run: |
-                OUTPUT=$(find ./yamls -path './.git' -prune -o -type f ! -iname '*.yml' ! -iname '*.yaml' -print)
                 echo $OUTPUT ${#OUTPUT}
                 if [ -n "$OUTPUT" ]; then
                   echo "::error::Error: Found Non YAML files."
