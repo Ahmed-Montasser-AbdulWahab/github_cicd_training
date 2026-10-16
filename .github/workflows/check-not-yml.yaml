@@ -24,6 +24,7 @@ jobs:
             max-parallel: 3
 
         runs-on: ubuntu-latest
+        container: ubuntu:latest
         steps:
             - name: Print Environment
               run: 'echo "Environment: ${{ matrix.environment }}"'
