@@ -17,8 +17,17 @@ on:
     
 jobs:
     check-not-extension:
+        strategy:
+            matrix:
+                environment: [dev, staging, prod]
+            fail-fast: false
+            max-parallel: 3
+
         runs-on: ubuntu-latest
         steps:
+            - name: Print Environment
+              run: 'echo "Environment: ${{ matrix.environment }}"'
+
             - name: Checkout repository
               uses: actions/checkout@v7.0.1
 
@@ -31,5 +40,11 @@ jobs:
                 else
                   echo "No Non YAML files found."
                 fi
+
+            - name: Print Called REST API if it was a repository_dispatch event
+              if: github.event_name == 'repository_dispatch'
+              run: |
+                echo "Repository Dispatch Event Triggered"
+                echo "REST API URL: ${{ github.api_url }}"
 
             
